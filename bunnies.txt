@@ -1,0 +1,7 @@
+American;12;1800;1
+American Chinchilla;12;1919;1
+American Fuzzy Lop;4;1989;0
+American Sable;9;1800;0
+Belgian Hare;9.5;1880;0
+Champagne d'Argent;12;1600;0
+Cinnamon;11;1972;0

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "FileUtils.h"
+#include "ReadUtils.h"
 using namespace std;
 // Rabbit struct, holds information about a single rabbit.
 struct Rabbit{
@@ -66,13 +66,13 @@ Rabbit readRabbit(ifstream &inFile){
 }
 
 // Database constant, maximum number of rabbits we can have in our array.
-const int MAX_BUNNIES=500;
+const int MAX_RABBITS=500;
 // Database function
 // Read the rabbits in from a file by looping and calling readRabbit.
 int readRabbits(Rabbit rabbits[]) {
     ifstream rabbitFile("rabbits.txt");
     int numRabbits = 0;
-    while(rabbitFile.peek() != EOF && numRabbits < MAX_BUNNIES) {
+    while(rabbitFile.peek() != EOF && numRabbits < MAX_RABBITS) {
         rabbits[numRabbits] = readRabbit(rabbitFile);
         numRabbits++;
     }
@@ -85,7 +85,7 @@ int readRabbits(Rabbit rabbits[]) {
 // When it is a file, printIndex should be false.
 // Only prints the valid rabbits.
 void printRabbits(ostream &out, Rabbit rabbits[], bool printIndex) {
-    for (int index = 0; index < MAX_BUNNIES; index++) {
+    for (int index = 0; index < MAX_RABBITS; index++) {
         if (rabbits[index].isValid) {
             if (printIndex) {
                 out << "Index " << index << ": ";
@@ -108,7 +108,7 @@ void removeRabbit(Rabbit rabbits[]) {
     int index = 0;
     do {
         index = readInt("Enter an index to remove between 0 and 500: ");
-    }while (index < 0 || index >= MAX_BUNNIES);
+    }while (index < 0 || index >= MAX_RABBITS);
     rabbits[index].isValid = false;
 }
 
@@ -116,7 +116,7 @@ void removeRabbit(Rabbit rabbits[]) {
 // Find an index in the rabbit list where the Rabbit is not valid
 // add the rabbit in that location.
 void addRabbit(Rabbit rabbits[]) {
-    for (int index = 0; index < MAX_BUNNIES; index++) {
+    for (int index = 0; index < MAX_RABBITS; index++) {
         if (rabbits[index].isValid == false) {
             rabbits[index] = makeRabbit();
             return;
@@ -136,7 +136,7 @@ void printMenu(char options[][MAX_MENU_LEN], int numEntries) {
 
 // Interact with the database functions using a menu to choose what to do
 int main() {
-    Rabbit rabbits[MAX_BUNNIES]; 
+    Rabbit rabbits[MAX_RABBITS]; 
     int option = 0;
     char menuOptions[][MAX_MENU_LEN]={  "Print rabbit list",
                                         "Save list to file",

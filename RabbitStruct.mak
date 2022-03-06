@@ -1,9 +1,9 @@
-RabbitStruct: RabbitStruct.o FileUtils.o
-	g++ RabbitStruct.o FileUtils.o -o RabbitStruct
+RabbitStruct: RabbitStruct.o ReadUtils.o
+	g++ RabbitStruct.o ReadUtils.o -o RabbitStruct
 
 
 RabbitStruct.o: RabbitStruct.cpp
 	g++ -c RabbitStruct.cpp -o RabbitStruct.o
 
-FileUtils.o: FileUtils.cpp FileUtils.h
-	g++ -c FileUtils.cpp -o FileUtils.o
+ReadUtils.o: ReadUtils.cpp ReadUtils.h
+	g++ -c ReadUtils.cpp -o ReadUtils.o

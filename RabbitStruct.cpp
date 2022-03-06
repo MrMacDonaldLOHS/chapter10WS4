@@ -2,19 +2,19 @@
 #include <fstream>
 #include "FileUtils.h"
 using namespace std;
-// Bunny struct, holds information about a single bunny.
-struct Bunny{
+// Rabbit struct, holds information about a single rabbit.
+struct Rabbit{
     enum {MAX_CHAR_LEN=100};
     char name[MAX_CHAR_LEN];
     double maxWeight;
     int yearRecognized;
     bool isRare;
     bool isValid;
-    Bunny();
+    Rabbit();
     
 };
 // Default constructor, clear all the information.
-Bunny::Bunny() {
+Rabbit::Rabbit() {
     for (int index = 0; index < MAX_CHAR_LEN; index++) {
         name[index] = '\0';
     }
@@ -25,104 +25,104 @@ Bunny::Bunny() {
 }
 
 
-// Bunny function
-// Print out the information about a bunny to the stream passed in
+// Rabbit function
+// Print out the information about a rabbit to the stream passed in
 // out can be cout or a file ofstream.
-void printBunny(ostream &out, Bunny b) {
+void printRabbit(ostream &out, Rabbit b) {
     out << b.name << ";" << b.maxWeight << ";" << b.yearRecognized << ";" << b.isRare << endl;
 }
 
-// Bunny function
-// Fill in the values about a bunny by asking the user questions
-Bunny makeBunny() {
-    Bunny b;
-    cout << "Enter a bunny name: ";
+// Rabbit function
+// Fill in the values about a rabbit by asking the user questions
+Rabbit makeRabbit() {
+    Rabbit b;
+    cout << "Enter a rabbit name: ";
     if (cin.peek() == '\n') {
         cin.ignore(100, '\n');
     }
-    cin.get(b.name, Bunny::MAX_CHAR_LEN);
-    b.maxWeight = readDouble("Enter max bunny weight: ");
+    cin.get(b.name, Rabbit::MAX_CHAR_LEN);
+    b.maxWeight = readDouble("Enter max rabbit weight: ");
     b.yearRecognized = readInt("Enter year recognized: ");
-    b.isRare = readBool("Is this bunny rare (y/n)? ");
+    b.isRare = readBool("Is this rabbit rare (y/n)? ");
     b.isValid = true;
     return b; 
 }
 
-// Bunny function
-// Read one entry in the file into a Bunny and create it.
-Bunny readBunny(ifstream &inFile){
-    Bunny bunny; 
-    inFile.get(bunny.name, Bunny::MAX_CHAR_LEN, ';');
+// Rabbit function
+// Read one entry in the file into a Rabbit and create it.
+Rabbit readRabbit(ifstream &inFile){
+    Rabbit rabbit; 
+    inFile.get(rabbit.name, Rabbit::MAX_CHAR_LEN, ';');
     inFile.ignore(100,';');
-    inFile >> bunny.maxWeight;
+    inFile >> rabbit.maxWeight;
     inFile.ignore(100,';');
-    inFile >> bunny.yearRecognized;
+    inFile >> rabbit.yearRecognized;
     inFile.ignore(100,';');
-    inFile >> bunny.isRare;
+    inFile >> rabbit.isRare;
     inFile.ignore(100,'\n');
     // If we reached the end of the file while reading, then the entry is not valid
-    bunny.isValid = !inFile.eof();
-    return bunny;
+    rabbit.isValid = !inFile.eof();
+    return rabbit;
 }
 
-// Database constant, maximum number of bunnies we can have in our array.
+// Database constant, maximum number of rabbits we can have in our array.
 const int MAX_BUNNIES=500;
 // Database function
-// Read the bunnies in from a file by looping and calling readBunny.
-int readBunnies(Bunny bunnies[]) {
-    ifstream bunnyFile("bunnies.txt");
-    int numBunnies = 0;
-    while(bunnyFile.peek() != EOF && numBunnies < MAX_BUNNIES) {
-        bunnies[numBunnies] = readBunny(bunnyFile);
-        numBunnies++;
+// Read the rabbits in from a file by looping and calling readRabbit.
+int readRabbits(Rabbit rabbits[]) {
+    ifstream rabbitFile("rabbits.txt");
+    int numRabbits = 0;
+    while(rabbitFile.peek() != EOF && numRabbits < MAX_BUNNIES) {
+        rabbits[numRabbits] = readRabbit(rabbitFile);
+        numRabbits++;
     }
-    return numBunnies;
+    return numRabbits;
 }
 
 // Database function.
-// Print out the bunnies to the stream out - this could be a file
+// Print out the rabbits to the stream out - this could be a file
 // or the screen. When it is the screen, printIndex should be true
 // When it is a file, printIndex should be false.
-// Only prints the valid bunnies.
-void printBunnies(ostream &out, Bunny bunnies[], bool printIndex) {
+// Only prints the valid rabbits.
+void printRabbits(ostream &out, Rabbit rabbits[], bool printIndex) {
     for (int index = 0; index < MAX_BUNNIES; index++) {
-        if (bunnies[index].isValid) {
+        if (rabbits[index].isValid) {
             if (printIndex) {
                 out << "Index " << index << ": ";
             }
-            printBunny(out, bunnies[index]);
+            printRabbit(out, rabbits[index]);
         } 
     }
 }
 
 // Database function.
-// Save the list of valid bunnies back to the text file.
-void saveBunnies(Bunny bunnies[]) {
-    ofstream out("bunnies.txt");
-    printBunnies(out, bunnies, false);
+// Save the list of valid rabbits back to the text file.
+void saveRabbits(Rabbit rabbits[]) {
+    ofstream out("rabbits.txt");
+    printRabbits(out, rabbits, false);
 }
 
 // Database function.
 // Get an index to remove, set the valid flag false in that location.
-void removeBunny(Bunny bunnies[]) {
+void removeRabbit(Rabbit rabbits[]) {
     int index = 0;
     do {
         index = readInt("Enter an index to remove between 0 and 500: ");
     }while (index < 0 || index >= MAX_BUNNIES);
-    bunnies[index].isValid = false;
+    rabbits[index].isValid = false;
 }
 
 // Database function.
-// Find an index in the bunny list where the Bunny is not valid
-// add the bunny in that location.
-void addBunny(Bunny bunnies[]) {
+// Find an index in the rabbit list where the Rabbit is not valid
+// add the rabbit in that location.
+void addRabbit(Rabbit rabbits[]) {
     for (int index = 0; index < MAX_BUNNIES; index++) {
-        if (bunnies[index].isValid == false) {
-            bunnies[index] = makeBunny();
+        if (rabbits[index].isValid == false) {
+            rabbits[index] = makeRabbit();
             return;
         }
     }
-    cout << "Too many bunnies! No room for more!" << endl;
+    cout << "Too many rabbits! No room for more!" << endl;
 }
 
 // Not a database function.
@@ -136,29 +136,29 @@ void printMenu(char options[][MAX_MENU_LEN], int numEntries) {
 
 // Interact with the database functions using a menu to choose what to do
 int main() {
-    Bunny bunnies[MAX_BUNNIES]; 
+    Rabbit rabbits[MAX_BUNNIES]; 
     int option = 0;
-    char menuOptions[][MAX_MENU_LEN]={  "Print bunny list",
+    char menuOptions[][MAX_MENU_LEN]={  "Print rabbit list",
                                         "Save list to file",
-                                        "Remove bunny",
-                                        "Add bunny",
+                                        "Remove rabbit",
+                                        "Add rabbit",
                                         "Quit"};
-    readBunnies(bunnies);
+    readRabbits(rabbits);
     do {
         printMenu(menuOptions,5);
         option = readInt("Please select an option: ");
         switch(option) {
             case 1:
-                printBunnies(cout, bunnies, true);
+                printRabbits(cout, rabbits, true);
                 break;
             case 2:
-                saveBunnies(bunnies);
+                saveRabbits(rabbits);
                 break;
             case 3:
-                removeBunny(bunnies);
+                removeRabbit(rabbits);
                 break;
             case 4:
-                addBunny(bunnies);
+                addRabbit(rabbits);
                 break;
             case 5:
                 break;
